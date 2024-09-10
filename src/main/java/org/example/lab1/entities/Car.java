@@ -1,12 +1,13 @@
-package org.example.lab1;
+package org.example.lab1.entities;
 
 import org.example.lab1.exeptions.DuplicateModelNameException;
 import org.example.lab1.exeptions.ModelPriceOutOfBoundsException;
 import org.example.lab1.exeptions.NoSuchModelNameException;
+import org.example.lab1.interfaces.Transport;
 
 import java.util.Arrays;
 
-public class Car {
+public class Car implements Transport {
     private String brand;
     private Model[] models;
     private int modelCount;
@@ -31,7 +32,7 @@ public class Car {
         }
         for (Model model : models) {
             if (model != null && model.getName().equals(modelName)) {
-                throw new DuplicateModelNameException("Model name already exists.");
+                throw new DuplicateModelNameException("Название модели уже существует");
             }
         }
         models[modelCount++] = new Model(modelName, price);
@@ -46,7 +47,7 @@ public class Car {
             }
         }
         if (indexToRemove == -1) {
-            throw new NoSuchModelNameException("Model name does not exist.");
+            throw new NoSuchModelNameException("Название модели не существует");
         }
         for (int i = indexToRemove; i < modelCount - 1; i++) {
             models[i] = models[i + 1];
@@ -68,20 +69,20 @@ public class Car {
                 return model.getPrice();
             }
         }
-        throw new NoSuchModelNameException("Model name does not exist.");
+        throw new NoSuchModelNameException("Название модели не существует");
     }
 
     public void setModelPrice(String modelName, double price) {
         for (Model model : models) {
             if (model != null && model.getName().equals(modelName)) {
                 if (price < 0) {
-                    throw new ModelPriceOutOfBoundsException("Price cannot be negative.");
+                    throw new ModelPriceOutOfBoundsException("Цена не может быть отрицательной");
                 }
                 model.setPrice(price);
                 return;
             }
         }
-        throw new NoSuchModelNameException("Model name does not exist.");
+        throw new NoSuchModelNameException("Название модели не существует");
     }
 
     public double[] getModelPrices() {

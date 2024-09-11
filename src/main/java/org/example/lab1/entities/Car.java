@@ -5,9 +5,10 @@ import org.example.lab1.exeptions.ModelPriceOutOfBoundsException;
 import org.example.lab1.exeptions.NoSuchModelNameException;
 import org.example.lab1.interfaces.Transport;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Car implements Transport {
+public class Car implements Transport, Serializable {
     private String brand;
     private Model[] models;
     private int modelCount;

@@ -4,8 +4,16 @@ import org.example.lab1.exeptions.ModelPriceOutOfBoundsException;
 import org.example.lab1.exeptions.NoSuchModelNameException;
 import org.example.lab1.interfaces.Transport;
 
-public class Motorcycle implements Transport {
-    private static class Model {
+
+import java.io.Serializable;
+
+public class Motorcycle implements Transport, Serializable {
+    private String brand;
+    private final Model head;
+    private int size;
+    private transient long lastModified; // Поле не будет сериализоваться
+
+    private static class Model implements Serializable {
         String name;
         double price;
         Model prev;
@@ -17,16 +25,18 @@ public class Motorcycle implements Transport {
         }
     }
 
-    private final Model head;
-    private int size;
-    private long lastModified;
-
-    public Motorcycle() {
+    public Motorcycle(String brand) {
+        this.brand = brand;
         this.head = new Model(null, 0);
         this.head.next = this.head;
         this.head.prev = this.head;
         this.size = 0;
         this.lastModified = System.currentTimeMillis();
+    }
+
+    @Override
+    public String getBrand() {
+        return brand;
     }
 
     public void addModel(String modelName, double price) {
@@ -122,3 +132,4 @@ public class Motorcycle implements Transport {
         return lastModified;
     }
 }
+

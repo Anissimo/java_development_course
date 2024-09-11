@@ -8,4 +8,6 @@ public interface Transport {
     void setModelPrice(String modelName, double price);
     double[] getModelPrices();
     int getModelCount();
+
+    String getBrand();
 }
